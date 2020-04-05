@@ -1,9 +1,10 @@
 /** @typedef {import('webpack').Configuration} Configuration */
 
 /** @type {Configuration} */
-const config = {
+const config = target => ({
   mode: 'development',
   devtool: 'source-map',
+  target,
 
   output: {
     filename: '[name].js',
@@ -34,6 +35,7 @@ const config = {
               {
                 loader: 'babel-loader',
                 options: {
+                  caller: target,
                   cacheDirectory: false
                 }
               }
@@ -43,6 +45,6 @@ const config = {
       }
     ]
   }
-}
+})
 
 module.exports = config

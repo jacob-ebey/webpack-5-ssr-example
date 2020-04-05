@@ -10,7 +10,6 @@ const common = require('./common')
 /** @type {Configuration} */
 const config = {
   name: 'client',
-  target: 'web',
   entry: ['@babel/polyfill', path.resolve(__dirname, '../client/index.js')],
   output: {
     path: path.resolve(__dirname, '../dist/client'),
@@ -27,4 +26,4 @@ const config = {
   ]
 }
 
-module.exports = merge.smart(common, config)
+module.exports = merge.smart(common('web'), config)

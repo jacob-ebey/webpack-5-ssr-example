@@ -1,5 +1,6 @@
 const path = require('path')
 const merge = require('webpack-merge')
+const nodeExternals = require('webpack-node-externals')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 
 const common = require('./common')
@@ -9,9 +10,8 @@ const common = require('./common')
 /** @type {Configuration} */
 const config = {
   name: 'server',
-  target: 'async-node',
   entry: ['@babel/polyfill', path.resolve(__dirname, '../server/index.js')],
-  externals: ['enhanced-resolve'],
+  externals: ['@loadable/component', nodeExternals()],
   output: {
     path: path.resolve(__dirname, '../dist/server'),
     libraryTarget: 'commonjs2'
@@ -26,4 +26,4 @@ const config = {
   ]
 }
 
-module.exports = merge.smart(common, config)
+module.exports = merge.smart(common('node'), config)

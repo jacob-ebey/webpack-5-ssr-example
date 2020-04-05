@@ -5,17 +5,20 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn build:client && yarn build:server",
-    "build:client": "webpack --progress --config ./config/client-base.js --profile --json > dist/client/stats.json",
-    "build:server": "webpack --progress --config ./config/server-base.js"
+    "build:client": "webpack --progress --config ./config/client-prod.js",
+    "build:server": "webpack --progress --config ./config/server-prod.js",
+    "start": "node ./dist/server/main.js",
+    "lint": "standard"
   },
   "dependencies": {
     "@loadable/component": "^5.12.0",
     "@loadable/server": "^5.12.0",
     "chalk": "^4.0.0",
-    "enhanced-resolve": "^4.1.1",
     "express": "^4.17.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "serve-static": "^1.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -33,6 +36,7 @@
     "standard": "^14.3.3",
     "webpack": "git://github.com/webpack/webpack.git#dev-1",
     "webpack-cli": "^3.3.11",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }

@@ -1,13 +1,18 @@
 import React from 'react'
-// import loadable from '@loadable/component'
+import { Route, Switch } from 'react-router-dom'
+import loadable from '@loadable/component'
 
-import HomePage from '../pages/index'
-// const HomePage = loadable(() => import('../pages/index'))
-
-console.log(HomePage)
+// import HomePage from '../pages/index'
+const HomePage = loadable(() => import('../pages/index'))
+const AboutPage = loadable(() => import('../pages/about'))
 
 function App () {
-  return <HomePage />
+  return (
+    <Switch>
+      <Route exact path='/' component={HomePage} />
+      <Route exact path='/about' component={AboutPage} />
+    </Switch>
+  )
 }
 
 export default App

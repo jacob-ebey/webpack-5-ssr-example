@@ -1,13 +1,17 @@
-/** @typedef {import('express').Application} Application */
-
+import path from 'path'
 import chalk from 'chalk'
+import serveStatic from 'serve-static'
+
+/** @typedef {import('express').Application} Application */
 
 /**
  * @param {Application} app
  * @param {() => void} done
  */
 async function initMiddleware (app, done) {
-  const bootstrap = (await import('./bootstrap')).default
+  app.use('/static', serveStatic(path.resolve(__dirname, '../client')))
+
+  const bootstrap = (await import('./render-bootstrap')).default
 
   try {
     app.get('/*', bootstrap())
