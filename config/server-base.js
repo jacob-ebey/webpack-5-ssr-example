@@ -1,4 +1,6 @@
 const path = require('path')
+const ExtractCSSChunks = require('mini-css-extract-plugin')
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 const nodeExternals = require('webpack-node-externals')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
@@ -15,6 +17,27 @@ const config = {
   output: {
     path: path.resolve(__dirname, '../dist/server'),
     libraryTarget: 'commonjs2'
+  },
+  module: {
+    rules: [
+      {
+        oneOf: [
+          {
+            test: /\.(css)$/,
+            exclude: /node_modules/,
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  onlyLocals: true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new ModuleFederationPlugin({

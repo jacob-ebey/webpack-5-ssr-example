@@ -5,24 +5,20 @@ const config = target => ({
   mode: 'development',
   devtool: 'source-map',
   target,
-
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js'
   },
-
   optimization: {
     minimize: false
   },
-
   resolve: {
     alias: {
       fs: false,
       path: false
     },
-    extensions: ['.js', '.jsx', '.mjs']
+    extensions: ['.js', '.jsx', '.mjs', '.css']
   },
-
   module: {
     rules: [
       {

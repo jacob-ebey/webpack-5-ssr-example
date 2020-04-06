@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
+import styles from './index.css'
+
 const QUERY = gql`
   query HomePageQuery {
     allFilms {
@@ -25,7 +27,7 @@ function HomePage () {
         <title>Home</title>
       </Helmet>
 
-      <div className='home'>
+      <div className={styles.home}>
         <h1>Hello, World!</h1>
         <Link to='/about'>About Page</Link>
 
