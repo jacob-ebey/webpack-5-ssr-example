@@ -19,7 +19,7 @@ module.exports = api => {
           useBuiltIns: web ? 'entry' : undefined,
           corejs: web ? 'core-js@3' : false,
           targets: !web ? { node: 'current' } : undefined,
-          modules: webpack ? false : 'commonjs2'
+          modules: webpack ? false : 'commonjs'
         }
       ]
     ],
