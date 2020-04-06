@@ -2,17 +2,22 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import { ApolloProvider } from '@apollo/react-hooks'
+import { getDataFromTree } from '@apollo/react-ssr'
 
 import App from '../common/app'
+import createApolloClient from '../common/apollo-client'
 
 /** @typedef {import('express').Request} Request */
 
-function ServerBootstrap ({ helmetContext, location }) {
+function ServerBootstrap ({ apolloClient, helmetContext, location }) {
   return (
     <HelmetProvider context={helmetContext}>
-      <StaticRouter location={location}>
-        <App />
-      </StaticRouter>
+      <ApolloProvider client={apolloClient}>
+        <StaticRouter location={location}>
+          <App />
+        </StaticRouter>
+      </ApolloProvider>
     </HelmetProvider>
   )
 }
@@ -22,21 +27,26 @@ function ServerBootstrap ({ helmetContext, location }) {
  */
 function getInitialProps (req) {
   return {
+    apolloClient: createApolloClient(),
     helmetContext: {},
     location: req.path
   }
 }
 
-function toHtmlString ({
+async function toHtmlString ({
   initialProps,
   jsx,
   linkTags,
   scriptTags,
   styleTags
 }) {
+  await getDataFromTree(jsx)
   const html = renderToString(jsx)
 
-  const { helmet } = initialProps.helmetContext
+  const {
+    apolloClient,
+    helmetContext: { helmet }
+  } = initialProps
 
   return `<!doctype html>
 <html ${helmet.htmlAttributes.toString()}>
@@ -52,6 +62,7 @@ function toHtmlString ({
 <body ${helmet.bodyAttributes.toString()}>
   <div id="root">${html}</div>
   ${scriptTags}
+  <script>window.__APOLLO_STATE__ = ${JSON.stringify(apolloClient.extract())}</script>
 </body>
 </html>`
 }
