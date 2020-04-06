@@ -5,22 +5,18 @@ import { BrowserRouter } from 'react-router-dom'
 
 import App from '../common/app'
 
+function ClientBootstrap () {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  )
+}
+
 function render () {
-  if (module.hot) {
-    ReactDOM.render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
-      document.getElementById('root')
-    )
-  } else {
-    ReactDOM.hydrate(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
-      document.getElementById('root')
-    )
-  }
+  const renderFunc = module.hot ? ReactDOM.render : ReactDOM.hydrate
+
+  renderFunc(<ClientBootstrap />, document.getElementById('root'))
 }
 
 if (module.hot) {
