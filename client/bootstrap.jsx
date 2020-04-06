@@ -2,14 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { loadableReady } from '@loadable/component'
 import { BrowserRouter } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 
 import App from '../common/app'
 
 function ClientBootstrap () {
   return (
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
   )
 }
 

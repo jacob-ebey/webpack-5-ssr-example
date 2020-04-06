@@ -1,13 +1,16 @@
 import React from 'react'
 import { StaticRouter } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 
 import App from '../common/app'
 
-function ServerBootstrap ({ location }) {
+function ServerBootstrap ({ helmetContext, location }) {
   return (
-    <StaticRouter location={location}>
-      <App />
-    </StaticRouter>
+    <HelmetProvider context={helmetContext}>
+      <StaticRouter location={location}>
+        <App />
+      </StaticRouter>
+    </HelmetProvider>
   )
 }
 

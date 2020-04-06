@@ -17,8 +17,16 @@ const statsFile = path.resolve('./dist/client/stats.json')
  */
 async function render (req, res) {
   try {
+    /** @type {{ helmet: HelmetData }} */
+    const helmetContext = {}
+
     const extractor = new ChunkExtractor({ statsFile })
-    const jsx = extractor.collectChunks(<Bootstrap location={req.path} />)
+    const jsx = extractor.collectChunks(
+      <Bootstrap
+        helmetContext={helmetContext}
+        location={req.path}
+      />
+    )
 
     const html = renderToString(jsx)
 
@@ -26,16 +34,21 @@ async function render (req, res) {
     const linkTags = extractor.getLinkTags()
     const styleTags = extractor.getStyleTags()
 
+    const { helmet } = helmetContext
+
     return res.send(
 `<!doctype html>
-<html lang="en-us">
+<html ${helmet.htmlAttributes.toString()}>
 <head>
+  ${helmet.title.toString()}
+  ${helmet.meta.toString()}
+  ${helmet.link.toString()}
   <!-- <script src="http://localhost:3002/static/container.js"></script> -->
   <link rel="shortcut icon" href="data:;base64,=">
   ${styleTags}
   ${linkTags}
 </head>
-<body>
+<body ${helmet.bodyAttributes.toString()}>
   <div id="root">${html}</div>
   ${scriptTags}
 </body>

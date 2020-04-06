@@ -1,13 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
-function HomePage () {
+function AboutPage () {
   return (
-    <div className='about'>
-      <h1>About Page</h1>
-      <Link to='/'>Home Page</Link>
-    </div>
+    <>
+      <Helmet>
+        <title>About</title>
+      </Helmet>
+
+      <div className='about'>
+        <h1>About Page</h1>
+        <Link to='/'>Home Page</Link>
+      </div>
+    </>
   )
 }
 
-export default HomePage
+export default AboutPage
