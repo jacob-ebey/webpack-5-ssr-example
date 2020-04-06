@@ -27,25 +27,32 @@ async function initMiddleware (app, done = undefined) {
     const webpack = require('webpack')
     const webpackDevMiddleware = require('webpack-dev-middleware')
     const webpackHotMiddleware = require('webpack-hot-middleware')
-    const config = require(path.resolve(__dirname, '../../config/client-dev.js'))
+    const webpackHotServerMiddleware = require('webpack-hot-server-middleware')
 
-    const compiler = webpack(config)
+    const clientConfig = require(path.resolve(__dirname, '../../config/client-dev.js'))
+    const serverConfig = require(path.resolve(__dirname, '../../config/server-dev.js'))
+
+    const compiler = webpack([clientConfig, serverConfig])
+    console.log(compiler.compilers[0].name)
+    console.log(compiler.compilers[1].name)
     const devMiddleware = webpackDevMiddleware(compiler, {
+      serverSideRender: true,
       writeToDisk (filePath) {
-        return /stats\.json/.test(filePath)
+        return /server-dev/.test(filePath) || /stats\.json/.test(filePath)
       }
     })
 
-    app.use('/static', devMiddleware)
+    app.use(devMiddleware)
+    app.use(webpackHotMiddleware(compiler.compilers.find(compiler => compiler.name === 'client')))
 
-    app.use(webpackHotMiddleware(compiler))
+    const hotMiddleware = webpackHotServerMiddleware(compiler)
+    app.use('/', hotMiddleware)
 
     // await new Promise(resolve => devMiddleware.waitUntilValid(resolve))
   } else {
     app.use('/static', serveStatic(path.resolve(__dirname, '../client')))
+    await initRender(app)
   }
-
-  await initRender(app)
 
   done && done()
 }

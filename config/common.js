@@ -16,6 +16,10 @@ const config = target => ({
   },
 
   resolve: {
+    alias: {
+      fs: false,
+      path: false
+    },
     extensions: ['.js', '.jsx', '.mjs']
   },
 
