@@ -26,6 +26,7 @@ module.exports = api => {
     plugins: [
       '@babel/plugin-syntax-dynamic-import',
       'babel-plugin-graphql-tag',
+      'babel-plugin-styled-components',
       '@loadable/babel-plugin'
     ]
   }
