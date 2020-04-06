@@ -23,6 +23,10 @@ module.exports = api => {
         }
       ]
     ],
-    plugins: ['@babel/plugin-syntax-dynamic-import', '@loadable/babel-plugin']
+    plugins: [
+      '@babel/plugin-syntax-dynamic-import',
+      'babel-plugin-graphql-tag',
+      '@loadable/babel-plugin'
+    ]
   }
 }
