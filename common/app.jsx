@@ -1,7 +1,8 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 import loadable from '@loadable/component'
 import { Helmet } from 'react-helmet-async'
+import { Anchor, Nav, Text } from 'grommet'
 
 import './app.module.css'
 
@@ -20,6 +21,11 @@ function App () {
           crossorigin='anonymous'
         />
       </Helmet>
+
+      <Nav direction='row' background='brand' pad='medium'>
+        <Anchor as={Link} to='/' hoverIndicator><Text>Home</Text></Anchor>
+        <Anchor as={Link} to='/about' hoverIndicator><Text>About</Text></Anchor>
+      </Nav>
 
       <Switch>
         <Route exact path='/' component={HomePage} />

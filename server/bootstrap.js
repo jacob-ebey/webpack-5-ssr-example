@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { renderToStringWithData } from '@apollo/react-ssr'
 import { discoverProjectStyles, getUsedStyles } from 'used-styles'
+import { ServerStyleSheet } from 'styled-components'
 
 import App from '../common/app'
 import createApolloClient from '../common/apollo-client'
@@ -43,8 +44,10 @@ async function toHtmlString ({
   scriptTags,
   styleTags
 }) {
-  renderToString(jsx)
-  const html = await renderToStringWithData(jsx)
+  const styledComponentsSheet = new ServerStyleSheet()
+  const html = await renderToStringWithData(styledComponentsSheet.collectStyles(jsx))
+
+  styleTags += `\n${styledComponentsSheet.getStyleTags()}`
 
   await stylesLookup
   // TODO: Figure out why ChunkExtractor isn't picking up css assets
