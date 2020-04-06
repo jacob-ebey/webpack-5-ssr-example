@@ -46,6 +46,7 @@ async function toHtmlString ({
   renderToString(jsx)
   const html = await renderToStringWithData(jsx)
 
+  await stylesLookup
   // TODO: Figure out why ChunkExtractor isn't picking up css assets
   const usedStyles = getUsedStyles(html, stylesLookup)
   usedStyles.forEach(style => {

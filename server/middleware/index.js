@@ -38,7 +38,7 @@ async function initMiddleware (app, done = undefined) {
     const devMiddleware = webpackDevMiddleware(compiler, {
       serverSideRender: true,
       writeToDisk (filePath) {
-        return /server-dev/.test(filePath) || /stats\.json/.test(filePath)
+        return /server-dev/.test(filePath) || /stats\.json/.test(filePath) || /\.css/.test(filePath)
       }
     })
 

@@ -21,16 +21,10 @@ const config = {
       {
         oneOf: [
           {
-            test: /\.(css)$/,
+            test: /\.module\.(css)$/,
             exclude: /node_modules/,
             use: [
-              {
-                loader: ExtractCSSChunks.loader,
-                options: {
-                  hot: true,
-                  reloadAll: true
-                }
-              },
+              ExtractCSSChunks.loader,
               {
                 loader: 'css-loader',
                 options: {

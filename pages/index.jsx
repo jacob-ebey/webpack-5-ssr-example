@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
-import styles from './index.css'
+import styles from './index.module.css'
 
 const QUERY = gql`
   query HomePageQuery {
@@ -25,6 +25,7 @@ function HomePage () {
     <>
       <Helmet>
         <title>Home</title>
+        <meta name='description' content='The home page :D' />
       </Helmet>
 
       <div className={styles.home}>

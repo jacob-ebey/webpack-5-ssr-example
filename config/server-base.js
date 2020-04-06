@@ -1,6 +1,4 @@
 const path = require('path')
-const ExtractCSSChunks = require('mini-css-extract-plugin')
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const nodeExternals = require('webpack-node-externals')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
@@ -23,7 +21,7 @@ const config = {
       {
         oneOf: [
           {
-            test: /\.(css)$/,
+            test: /\.module\.(css)$/,
             exclude: /node_modules/,
             use: [
               {

@@ -7,6 +7,7 @@ function AboutPage () {
     <>
       <Helmet>
         <title>About</title>
+        <meta name='description' content='Describing more about stuff.' />
       </Helmet>
 
       <div className='about'>
