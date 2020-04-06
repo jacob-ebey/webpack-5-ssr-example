@@ -5,11 +5,23 @@ import { BrowserRouter } from 'react-router-dom'
 
 import App from '../common/app'
 
-loadableReady(() => {
-  ReactDOM.hydrate(
+function ClientBootstrap () {
+  return (
     <BrowserRouter>
       <App />
-    </BrowserRouter>,
-    document.getElementById('root')
+    </BrowserRouter>
   )
-})
+}
+
+function render () {
+  const renderFunc = module.hot ? ReactDOM.render : ReactDOM.hydrate
+
+  renderFunc(<ClientBootstrap />, document.getElementById('root'))
+}
+
+if (module.hot) {
+  render()
+  module.hot.accept()
+} else {
+  loadableReady(render)
+}
