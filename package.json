@@ -20,7 +20,7 @@
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
     "chalk": "^4.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "grommet": "^2.12.0",
